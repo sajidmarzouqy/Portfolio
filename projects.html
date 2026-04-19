@@ -553,7 +553,7 @@
                             <div class="project-card">
                                 <button class="entry-toggle" type="button">
                                     <div class="entry-toggle-main">
-                                        <div class="job-title" id="title-stage">Stage Cybersécurité</div>
+                                        <div class="job-title" id="title-stage">Analyse Cybersécurité et Réseaux</div>
                                         <span class="job-meta" id="meta-stage">Expérience Professionnelle</span>
                                     </div>
                                     <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
@@ -561,21 +561,22 @@
                                 <div class="entry-content">
                                     <div class="entry-content-inner">
                                         <p class="job-intro" id="desc-stage">
-                                            Texte de présentation générique à compléter : contexte du stage, environnement technique, missions principales et résultats obtenus.
+                                            Stage orienté supervision, analyse de la sécurité du système d'information et amélioration continue des pratiques cybersécurité dans un environnement réseau.
                                         </p>
                                         
                                         <ul class="job-list" id="list-stage">
-                                            <li>Mission à compléter.</li>
-                                            <li>Mission à compléter.</li>
-                                            <li>Mission à compléter.</li>
+                                            <li>Supervision des flux réseaux et de la sécurité du SI.</li>
+                                            <li>Analyse et suivi des incidents ainsi que des vulnérabilités.</li>
+                                            <li>Remise à niveau des applications et des équipements réseaux.</li>
+                                            <li>Rédaction et revue des procédures de cybersécurité.</li>
                                         </ul>
 
                                         <span class="section-label" id="tools-stage-label">Outils</span>
                                         <div class="tech-stack">
-                                            <span class="tech-tag">Linux</span>
-                                            <span class="tech-tag">Wireshark</span>
-                                            <span class="tech-tag">Active Directory</span>
-                                            <span class="tech-tag">Sécurité Réseau</span>
+                                            <span class="tech-tag">Analyse Réseau</span>
+                                            <span class="tech-tag">Red Teaming</span>
+                                            <span class="tech-tag">Blue Teaming</span>
+                                            <span class="tech-tag">GRC</span>
                                         </div>
 
                                         <div class="competency-list">
@@ -605,7 +606,7 @@
                             <div class="project-card">
                                 <button class="entry-toggle" type="button">
                                     <div class="entry-toggle-main">
-                                        <div class="job-title" id="title-ai">Freelance - Entraîneur / Évaluateur IA</div>
+                                        <div class="job-title" id="title-ai">Formateur IA</div>
                                         <span class="job-meta" id="meta-ai">Expérience Professionnelle</span>
                                     </div>
                                     <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
@@ -613,21 +614,21 @@
                                 <div class="entry-content">
                                     <div class="entry-content-inner">
                                         <p class="job-intro" id="desc-ai">
-                                            Texte de présentation générique à compléter : périmètre des missions, type d'évaluation réalisée, responsabilités et livrables attendus.
+                                            Mission centrée sur l'analyse de réponses IA, la revue de contenus techniques et la comparaison de performances entre différentes langues.
                                         </p>
                                         
                                         <ul class="job-list" id="list-ai">
-                                            <li>Mission à compléter.</li>
-                                            <li>Mission à compléter.</li>
-                                            <li>Mission à compléter.</li>
+                                            <li>Revue de contenus en langage Python et en mathématiques.</li>
+                                            <li>Comparaison des performances IA en français et en anglais.</li>
+                                            <li>Analyse qualitative des réponses et des écarts de compréhension.</li>
                                         </ul>
 
                                         <span class="section-label" id="tools-ai-label">Outils</span>
                                         <div class="tech-stack">
                                             <span class="tech-tag">Python</span>
-                                            <span class="tech-tag">Prompting</span>
+                                            <span class="tech-tag">Mathématiques</span>
                                             <span class="tech-tag">Évaluation IA</span>
-                                            <span class="tech-tag">Analyse</span>
+                                            <span class="tech-tag">FR / EN</span>
                                         </div>
 
                                         <div class="competency-list">
@@ -873,23 +874,23 @@
             if(document.getElementById('tab-proj')) document.getElementById('tab-proj').innerText = isEn ? "Projects & SAE" : "Projets & SAE";
 
             // EXPERIENCES
-            if(document.getElementById('title-stage')) document.getElementById('title-stage').innerText = isEn ? "Cybersecurity Internship" : "Stage Cybersécurité";
+            if(document.getElementById('title-stage')) document.getElementById('title-stage').innerText = isEn ? "Cybersecurity & Network Analysis" : "Analyse Cybersécurité et Réseaux";
             if(document.getElementById('meta-stage')) document.getElementById('meta-stage').innerText = isEn ? "Professional Experience" : "Expérience Professionnelle";
             if(document.getElementById('desc-stage')) document.getElementById('desc-stage').innerText = isEn
-                ? "Generic presentation text to complete: internship context, technical environment, key missions and results achieved."
-                : "Texte de présentation générique à compléter : contexte du stage, environnement technique, missions principales et résultats obtenus.";
+                ? "Internship focused on monitoring, information-system security analysis and continuous improvement of cybersecurity practices in a network environment."
+                : "Stage orienté supervision, analyse de la sécurité du système d'information et amélioration continue des pratiques cybersécurité dans un environnement réseau.";
             if(document.getElementById('list-stage')) document.getElementById('list-stage').innerHTML = isEn
-                ? "<li>Mission to complete.</li><li>Mission to complete.</li><li>Mission to complete.</li>"
-                : "<li>Mission à compléter.</li><li>Mission à compléter.</li><li>Mission à compléter.</li>";
+                ? "<li>Monitoring network flows and information-system security.</li><li>Analyzing and tracking incidents as well as vulnerabilities.</li><li>Upgrading applications and network equipment.</li><li>Writing and reviewing cybersecurity procedures.</li>"
+                : "<li>Supervision des flux réseaux et de la sécurité du SI.</li><li>Analyse et suivi des incidents ainsi que des vulnérabilités.</li><li>Remise à niveau des applications et des équipements réseaux.</li><li>Rédaction et revue des procédures de cybersécurité.</li>";
 
-            if(document.getElementById('title-ai')) document.getElementById('title-ai').innerText = isEn ? "Freelance - AI Trainer / Evaluator" : "Freelance - Entraîneur / Évaluateur IA";
+            if(document.getElementById('title-ai')) document.getElementById('title-ai').innerText = isEn ? "AI Trainer" : "Formateur IA";
             if(document.getElementById('meta-ai')) document.getElementById('meta-ai').innerText = isEn ? "Professional Experience" : "Expérience Professionnelle";
             if(document.getElementById('desc-ai')) document.getElementById('desc-ai').innerText = isEn
-                ? "Generic presentation text to complete: mission scope, type of evaluation performed, responsibilities and expected deliverables."
-                : "Texte de présentation générique à compléter : périmètre des missions, type d'évaluation réalisée, responsabilités et livrables attendus.";
+                ? "Mission focused on AI-output analysis, technical content review and multilingual performance comparison."
+                : "Mission centrée sur l'analyse de réponses IA, la revue de contenus techniques et la comparaison de performances entre différentes langues.";
             if(document.getElementById('list-ai')) document.getElementById('list-ai').innerHTML = isEn
-                ? "<li>Mission to complete.</li><li>Mission to complete.</li><li>Mission to complete.</li>"
-                : "<li>Mission à compléter.</li><li>Mission à compléter.</li><li>Mission à compléter.</li>";
+                ? "<li>Reviewing content related to Python and mathematics.</li><li>Comparing AI performance in French and English.</li><li>Analyzing response quality and language-level differences.</li>"
+                : "<li>Revue de contenus en langage Python et en mathématiques.</li><li>Comparaison des performances IA en français et en anglais.</li><li>Analyse qualitative des réponses et des écarts de compréhension.</li>";
 
             // PROJECTS
             if(document.getElementById('title-multisite')) document.getElementById('title-multisite').innerText = isEn ? "Multi-site Network (SAE 2.01)" : "Réseau Multi-site (SAE 2.01)";
