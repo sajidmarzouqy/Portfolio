@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sajid Marzouqy | Projets & Expériences</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #121212;
+            --bg-panel: #18181c;
+            --bg-light: rgba(255,255,255,0.035);
+            --text-main: #f3f4f6;
+            --text-muted: #a1a1aa;
+            --accent: #8ea3b7;
+            --accent-strong: #d6dde6;
+            --border: rgba(255,255,255,0.08);
+            --font: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font);
+            background:
+                radial-gradient(circle at top center, rgba(142, 163, 183, 0.05), transparent 34%),
+                linear-gradient(180deg, #121212 0%, #15161a 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px, 26px 26px;
+            opacity: 0.14;
+            mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- 1. OVERLAY (Caché par défaut) --- */
+        #language-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0b0b0f; z-index: 20000;
+            display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease;
+        }
+
+        .lang-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .lang-options { display: flex; gap: 30px; }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            min-width: 160px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn:hover {
+            border-color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.12);
+        }
+
+        /* --- 2. LE SÉLECTEUR PERMANENT --- */
+        #permanent-lang-switch {
+            position: fixed; top: 20px; left: 20px; z-index: 10001;
+            background: rgba(18, 18, 24, 0.88);
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        #permanent-lang-switch select {
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        #permanent-lang-switch option { color: #111; }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(18, 18, 18, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            height: 74px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: 1080px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: auto;
+            margin-left: 60px;
+            object-fit: contain;
+            opacity: 0.98;
+        }
+
+        .menu {
+            display: flex;
+            gap: 28px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .menu a { color: var(--text-muted); position: relative; }
+
+        .menu a:hover,
+        .menu a.active {
+            color: var(--text-main);
+        }
+
+        .menu a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 100%;
+            height: 1px;
+            background: var(--accent-strong);
+            opacity: 0.9;
+        }
+
+        /* LAYOUT */
+        section {
+            padding: 120px 0 80px;
+            min-height: 100vh;
+            background: transparent;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+        }
+
+        /* PROJETS (TABS) */
+        .work-container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .work-tabs {
+            flex-basis: 280px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border);
+            padding-right: 20px;
+        }
+
+        .work-tab-btn {
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 1rem;
+            color: var(--text-muted);
+            border-radius: 12px;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .work-tab-btn:hover {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+        }
+
+        .work-tab-btn.active {
+            color: var(--text-main);
+            background-color: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+        
+        .work-content-wrapper {
+            flex-grow: 1;
+            min-height: 300px;
+            background: rgba(24, 24, 28, 0.9);
+            padding: 34px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        }
+
+        .work-panel { display: none; animation: fadeIn 0.4s ease; }
+        .work-panel.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 22px;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px;
+        }
+
+        .entry-toggle {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .entry-toggle-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .entry-toggle-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.03);
+            transition: transform 0.25s ease, color 0.25s ease, background 0.25s ease;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .project-card.expanded .entry-toggle-icon {
+            transform: rotate(180deg);
+            color: var(--text-main);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .entry-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .entry-content-inner {
+            padding-top: 20px;
+        }
+
+        .job-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .job-meta {
+            font-size: 0.85rem;
+            color: var(--accent-strong);
+            font-weight: 600;
+            margin-bottom: 18px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        .job-intro {
+            font-size: 1rem;
+            color: #d4d4d8;
+            margin-bottom: 22px;
+            line-height: 1.75;
+        }
+
+        .job-list {
+            padding-left: 20px;
+            margin-bottom: 26px;
+        }
+
+        .job-list li {
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .section-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--accent-strong);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 16px;
+        }
+
+        .tech-tag {
+            font-size: 0.82rem;
+            background: rgba(255,255,255,0.05);
+            padding: 7px 12px;
+            border-radius: 999px;
+            color: #dde2ea;
+            font-weight: 500;
+            border: 1px solid var(--border);
+        }
+
+        .report-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .report-btn:hover {
+            background: rgba(255,255,255,0.09);
+            transform: translateY(-1px);
+        }
+
+        /* ACCORDION */
+        .competency-list {
+            margin-top: 18px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .competency-item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.025);
+            overflow: hidden;
+        }
+
+        .competency-toggle {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            text-align: left;
+            padding: 14px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .competency-toggle:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .competency-toggle i {
+            color: var(--text-muted);
+            transition: transform 0.25s ease;
+        }
+
+        .competency-item.active .competency-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .competency-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 16px;
+        }
+
+        .competency-content p {
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            padding: 0 0 16px;
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .menu { display: none; }
+
+            .work-container { flex-direction: column; }
+            
+            .work-tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding-right: 0;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                white-space: nowrap;
+            }
+            
+            .work-tab-btn {
+                white-space: nowrap;
+                margin-bottom: 0;
+                margin-right: 10px;
+                background-color: rgba(255,255,255,0.03);
+                border-radius: 999px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                border: 1px solid var(--border);
+            }
+
+            .work-tab-btn.active {
+                background-color: rgba(255,255,255,0.08);
+                color: #fff;
+            }
+            
+            .work-content-wrapper {
+                padding: 24px;
+            }
+
+            h2 { font-size: 1.8rem; text-align: center; }
+            .nav-logo { margin-left: 30px; }
+        }
+    </style>
+    
+    <script>
+        if (localStorage.getItem('selectedLanguage')) {
+            document.write('<style>#language-overlay { display: none !important; }</style>');
+        }
+    </script>
+</head>
+<body>
+
+    <div id="language-overlay">
+        <h2 class="lang-title">Choose your language / Choisissez votre langue</h2>
+        <div class="lang-options">
+            <button class="lang-btn" onclick="switchLanguage('fr')"><span>🇫🇷</span> Français</button>
+            <button class="lang-btn" onclick="switchLanguage('en')"><span>🇬🇧</span> English</button>
+        </div>
+    </div>
+
+    <div id="permanent-lang-switch">
+        <select id="top-select" onchange="switchLanguage(this.value)">
+            <option value="fr">🇫🇷 FR</option>
+            <option value="en">🇬🇧 EN</option>
+        </select>
+    </div>
+
+    <nav>
+        <div class="nav-content">
+            <img src="Gemini_Generated_Image_pfub6hpfub6hpfub-removebg-preview.png" alt="Logo Sajid Marzouqy" class="nav-logo" style="width: 150px; height: auto;">
+            <div class="menu">
+                <a href="index.html" id="nav-home">Accueil</a>
+                <a href="projects.html" class="active" id="nav-projects">Projets &amp; Expériences</a>
+                <a href="skills.html" id="nav-skills">Compétences</a>
+                <a href="formation.html" id="nav-formation">Formation &amp; Certifs</a>
+                <a href="about.html" id="nav-about">À propos</a>
+                <a href="contact.html" id="nav-contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div class="container">
+            <h2 id="page-title">Projets &amp; Expériences</h2>
+            
+            <div class="work-container">
+                <div class="work-tabs">
+                    <button class="work-tab-btn active" onclick="openTab(event, 'panel-experiences')" id="tab-exp">Expériences</button>
+                    <button class="work-tab-btn" onclick="openTab(event, 'panel-projects')" id="tab-proj">Projets &amp; SAE</button>
+                </div>
+
+                <div class="work-content-wrapper">
+                    
+                    <div id="panel-experiences" class="work-panel active">
+                        <div class="cards-grid">
+                            <div class="project-card">
+                                <button class="entry-toggle" type="button">
+                                    <div class="entry-toggle-main">
+                                        <div class="job-title" id="title-stage">Stage Cybersécurité</div>
+                                        <span class="job-meta" id="meta-stage">Expérience Professionnelle</span>
+                                    </div>
+                                    <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="entry-content">
+                                    <div class="entry-content-inner">
+                                        <p class="job-intro" id="desc-stage">
+                                            Texte de présentation générique à compléter : contexte du stage, environnement technique, missions principales et résultats obtenus.
+                                        </p>
+                                        
+                                        <ul class="job-list" id="list-stage">
+                                            <li>Mission à compléter.</li>
+                                            <li>Mission à compléter.</li>
+                                            <li>Mission à compléter.</li>
+                                        </ul>
+
+                                        <span class="section-label" id="tools-stage-label">Outils</span>
+                                        <div class="tech-stack">
+                                            <span class="tech-tag">Linux</span>
+                                            <span class="tech-tag">Wireshark</span>
+                                            <span class="tech-tag">Active Directory</span>
+                                            <span class="tech-tag">Sécurité Réseau</span>
+                                        </div>
+
+                                        <div class="competency-list">
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Administrer les réseaux et l'Internet</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Mobiliser les méthodes d'administration, de supervision et de sécurisation pour maintenir un environnement réseau cohérent et exploitable.</p>
+                                                </div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Connecter les entreprises et les usagers</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Prendre en compte les besoins utilisateurs, la qualité de service et la continuité des accès dans un contexte professionnel réel.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <button class="entry-toggle" type="button">
+                                    <div class="entry-toggle-main">
+                                        <div class="job-title" id="title-ai">Freelance - Entraîneur / Évaluateur IA</div>
+                                        <span class="job-meta" id="meta-ai">Expérience Professionnelle</span>
+                                    </div>
+                                    <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="entry-content">
+                                    <div class="entry-content-inner">
+                                        <p class="job-intro" id="desc-ai">
+                                            Texte de présentation générique à compléter : périmètre des missions, type d'évaluation réalisée, responsabilités et livrables attendus.
+                                        </p>
+                                        
+                                        <ul class="job-list" id="list-ai">
+                                            <li>Mission à compléter.</li>
+                                            <li>Mission à compléter.</li>
+                                            <li>Mission à compléter.</li>
+                                        </ul>
+
+                                        <span class="section-label" id="tools-ai-label">Outils</span>
+                                        <div class="tech-stack">
+                                            <span class="tech-tag">Python</span>
+                                            <span class="tech-tag">Prompting</span>
+                                            <span class="tech-tag">Évaluation IA</span>
+                                            <span class="tech-tag">Analyse</span>
+                                        </div>
+
+                                        <div class="competency-list">
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Créer des outils et applications informatiques pour les R&amp;T</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Analyser des scripts, comprendre leur logique et proposer des améliorations dans un cadre technique exigeant.</p>
+                                                </div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Collaborer en mode projet</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Structurer ses retours, argumenter ses choix et produire un travail lisible pour des parties prenantes techniques ou non techniques.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="panel-projects" class="work-panel">
+                        <div class="cards-grid">
+                            <div class="project-card">
+                                <button class="entry-toggle" type="button">
+                                    <div class="entry-toggle-main">
+                                        <div class="job-title" id="title-multisite">Réseau Multi-site (SAE 2.01)</div>
+                                        <span class="job-meta" id="meta-multisite">Projet &amp; SAE</span>
+                                    </div>
+                                    <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="entry-content">
+                                    <div class="entry-content-inner">
+                                        <p class="job-intro" id="desc-multisite">
+                                            Conception et mise en place d'un réseau pour une entreprise multi-site, avec réflexion sur l'architecture, les interconnexions, les flux et la continuité de service.
+                                        </p>
+                                        
+                                        <ul class="job-list" id="list-multisite">
+                                            <li>Structuration de l'architecture réseau entre plusieurs sites.</li>
+                                            <li>Configuration des équipements et des services nécessaires à l'interconnexion.</li>
+                                            <li>Formalisation des choix techniques dans un livrable exploitable.</li>
+                                        </ul>
+
+                                        <span class="section-label" id="tools-multisite-label">Outils</span>
+                                        <div class="tech-stack">
+                                            <span class="tech-tag">Cisco</span>
+                                            <span class="tech-tag">Packet Tracer</span>
+                                            <span class="tech-tag">Routage</span>
+                                            <span class="tech-tag">VLAN</span>
+                                        </div>
+
+                                        <div class="competency-list">
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Administrer les réseaux et l'Internet</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Déployer et configurer les composants d'un réseau d'entreprise en tenant compte de la disponibilité, de l'adressage et des contraintes d'exploitation.</p>
+                                                </div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Connecter les entreprises et les usagers</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Garantir une communication fiable entre sites et utilisateurs grâce à une architecture pensée pour les usages et la qualité de service.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a class="report-btn" href="Projet-SAE-201-Conception-et-mise-en-place-dun-reseau-pour-une-entreprise-multi-site (1).pptx" target="_blank" rel="noopener" id="btn-multisite">
+                                            <i class="fas fa-file-alt"></i> Voir le rapport
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <button class="entry-toggle" type="button">
+                                    <div class="entry-toggle-main">
+                                        <div class="job-title" id="title-pentest">Audit &amp; Pentesting</div>
+                                        <span class="job-meta" id="meta-pentest">Projet &amp; SAE</span>
+                                    </div>
+                                    <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="entry-content">
+                                    <div class="entry-content-inner">
+                                        <p class="job-intro" id="desc-pentest">
+                                            Mission de test d'intrusion visant à identifier des vulnérabilités, analyser les surfaces d'exposition et produire une restitution claire des constats.
+                                        </p>
+                                        
+                                        <ul class="job-list" id="list-pentest">
+                                            <li>Observation des faiblesses potentielles d'un environnement cible.</li>
+                                            <li>Qualification des vulnérabilités et rédaction d'une restitution structurée.</li>
+                                            <li>Proposition de mesures correctives adaptées au contexte.</li>
+                                        </ul>
+
+                                        <span class="section-label" id="tools-pentest-label">Outils</span>
+                                        <div class="tech-stack">
+                                            <span class="tech-tag">Kali Linux</span>
+                                            <span class="tech-tag">Nmap</span>
+                                            <span class="tech-tag">Analyse Réseau</span>
+                                            <span class="tech-tag">Sécurité</span>
+                                        </div>
+
+                                        <div class="competency-list">
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Administrer les réseaux et l'Internet</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Évaluer la robustesse d'une infrastructure en observant ses points d'exposition et en comprenant son fonctionnement technique.</p>
+                                                </div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Surveiller un système d'information</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Identifier des comportements anormaux, qualifier les risques et proposer des pistes d'amélioration pour renforcer le niveau de sécurité.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a class="report-btn" href="SAE-Pentesting (1) (1).pdf" target="_blank" rel="noopener" id="btn-pentest">
+                                            <i class="fas fa-file-alt"></i> Voir le rapport
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <button class="entry-toggle" type="button">
+                                    <div class="entry-toggle-main">
+                                        <div class="job-title" id="title-green">Déploiement GreenHome (SAE 2.03)</div>
+                                        <span class="job-meta" id="meta-green">Projet &amp; SAE</span>
+                                    </div>
+                                    <span class="entry-toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="entry-content">
+                                    <div class="entry-content-inner">
+                                        <p class="job-intro" id="desc-green">
+                                            Déploiement de services d'infrastructure avec mise en place des briques nécessaires au bon fonctionnement d'un environnement cohérent, administrable et documenté.
+                                        </p>
+                                        
+                                        <ul class="job-list" id="list-green">
+                                            <li>Mise en place de services essentiels à l'infrastructure.</li>
+                                            <li>Configuration d'un environnement stable et exploitable.</li>
+                                            <li>Documentation des choix et de la méthode de déploiement.</li>
+                                        </ul>
+
+                                        <span class="section-label" id="tools-green-label">Outils</span>
+                                        <div class="tech-stack">
+                                            <span class="tech-tag">Linux</span>
+                                            <span class="tech-tag">DNS</span>
+                                            <span class="tech-tag">DHCP</span>
+                                            <span class="tech-tag">SSH</span>
+                                        </div>
+
+                                        <div class="competency-list">
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Administrer les réseaux et l'Internet</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Déployer les services d'infrastructure nécessaires au fonctionnement d'un système d'information et garantir leur cohérence technique.</p>
+                                                </div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <button class="competency-toggle" type="button">
+                                                    <span>Créer des outils et applications informatiques pour les R&amp;T</span>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="competency-content">
+                                                    <p>Produire des configurations, des méthodes et une documentation claire pour rendre un déploiement reproductible et compréhensible.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a class="report-btn" href="SAE_2_03_GREENHOME_PARIS.docx.pdf" target="_blank" rel="noopener" id="btn-green">
+                                            <i class="fas fa-file-alt"></i> Voir le rapport
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Sajid Marzouqy.</p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("work-panel");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].className = tabcontent[i].className.replace(" active", "");
+            }
+            tablinks = document.getElementsByClassName("work-tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).className += " active";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+    <script>
+        function updateTexts(lang) {
+            const isEn = lang === 'en';
+            
+            // MENU
+            if(document.getElementById('nav-home')) document.getElementById('nav-home').innerText = isEn ? "Home" : "Accueil";
+            if(document.getElementById('nav-projects')) document.getElementById('nav-projects').innerText = isEn ? "Projects & Experience" : "Projets & Expériences";
+            if(document.getElementById('nav-skills')) document.getElementById('nav-skills').innerText = isEn ? "Skills" : "Compétences";
+            if(document.getElementById('nav-formation')) document.getElementById('nav-formation').innerText = isEn ? "Education & Certifications" : "Formation & Certifs";
+            if(document.getElementById('nav-about')) document.getElementById('nav-about').innerText = isEn ? "About" : "À propos";
+            if(document.getElementById('nav-contact')) document.getElementById('nav-contact').innerText = isEn ? "Contact" : "Contact";
+
+            // TITRE PAGE
+            if(document.getElementById('page-title')) document.getElementById('page-title').innerText = isEn ? "Projects & Experience" : "Projets & Expériences";
+
+            // TABS
+            if(document.getElementById('tab-exp')) document.getElementById('tab-exp').innerText = isEn ? "Experience" : "Expériences";
+            if(document.getElementById('tab-proj')) document.getElementById('tab-proj').innerText = isEn ? "Projects & SAE" : "Projets & SAE";
+
+            // EXPERIENCES
+            if(document.getElementById('title-stage')) document.getElementById('title-stage').innerText = isEn ? "Cybersecurity Internship" : "Stage Cybersécurité";
+            if(document.getElementById('meta-stage')) document.getElementById('meta-stage').innerText = isEn ? "Professional Experience" : "Expérience Professionnelle";
+            if(document.getElementById('desc-stage')) document.getElementById('desc-stage').innerText = isEn
+                ? "Generic presentation text to complete: internship context, technical environment, key missions and results achieved."
+                : "Texte de présentation générique à compléter : contexte du stage, environnement technique, missions principales et résultats obtenus.";
+            if(document.getElementById('list-stage')) document.getElementById('list-stage').innerHTML = isEn
+                ? "<li>Mission to complete.</li><li>Mission to complete.</li><li>Mission to complete.</li>"
+                : "<li>Mission à compléter.</li><li>Mission à compléter.</li><li>Mission à compléter.</li>";
+
+            if(document.getElementById('title-ai')) document.getElementById('title-ai').innerText = isEn ? "Freelance - AI Trainer / Evaluator" : "Freelance - Entraîneur / Évaluateur IA";
+            if(document.getElementById('meta-ai')) document.getElementById('meta-ai').innerText = isEn ? "Professional Experience" : "Expérience Professionnelle";
+            if(document.getElementById('desc-ai')) document.getElementById('desc-ai').innerText = isEn
+                ? "Generic presentation text to complete: mission scope, type of evaluation performed, responsibilities and expected deliverables."
+                : "Texte de présentation générique à compléter : périmètre des missions, type d'évaluation réalisée, responsabilités et livrables attendus.";
+            if(document.getElementById('list-ai')) document.getElementById('list-ai').innerHTML = isEn
+                ? "<li>Mission to complete.</li><li>Mission to complete.</li><li>Mission to complete.</li>"
+                : "<li>Mission à compléter.</li><li>Mission à compléter.</li><li>Mission à compléter.</li>";
+
+            // PROJECTS
+            if(document.getElementById('title-multisite')) document.getElementById('title-multisite').innerText = isEn ? "Multi-site Network (SAE 2.01)" : "Réseau Multi-site (SAE 2.01)";
+            if(document.getElementById('meta-multisite')) document.getElementById('meta-multisite').innerText = isEn ? "Project & SAE" : "Projet & SAE";
+            if(document.getElementById('desc-multisite')) document.getElementById('desc-multisite').innerText = isEn
+                ? "Design and implementation of a network for a multi-site company, with a focus on architecture, interconnections, traffic flows and service continuity."
+                : "Conception et mise en place d'un réseau pour une entreprise multi-site, avec réflexion sur l'architecture, les interconnexions, les flux et la continuité de service.";
+            if(document.getElementById('list-multisite')) document.getElementById('list-multisite').innerHTML = isEn
+                ? "<li>Structured the network architecture across multiple sites.</li><li>Configured devices and services required for interconnection.</li><li>Formalized technical decisions in a usable deliverable.</li>"
+                : "<li>Structuration de l'architecture réseau entre plusieurs sites.</li><li>Configuration des équipements et des services nécessaires à l'interconnexion.</li><li>Formalisation des choix techniques dans un livrable exploitable.</li>";
+
+            if(document.getElementById('title-pentest')) document.getElementById('title-pentest').innerText = isEn ? "Audit & Pentesting" : "Audit & Pentesting";
+            if(document.getElementById('meta-pentest')) document.getElementById('meta-pentest').innerText = isEn ? "Project & SAE" : "Projet & SAE";
+            if(document.getElementById('desc-pentest')) document.getElementById('desc-pentest').innerText = isEn
+                ? "Penetration testing mission aimed at identifying vulnerabilities, analyzing exposed attack surfaces and delivering a clear restitution of findings."
+                : "Mission de test d'intrusion visant à identifier des vulnérabilités, analyser les surfaces d'exposition et produire une restitution claire des constats.";
+            if(document.getElementById('list-pentest')) document.getElementById('list-pentest').innerHTML = isEn
+                ? "<li>Observed potential weaknesses in a target environment.</li><li>Qualified vulnerabilities and wrote a structured restitution.</li><li>Suggested corrective measures adapted to the context.</li>"
+                : "<li>Observation des faiblesses potentielles d'un environnement cible.</li><li>Qualification des vulnérabilités et rédaction d'une restitution structurée.</li><li>Proposition de mesures correctives adaptées au contexte.</li>";
+
+            if(document.getElementById('title-green')) document.getElementById('title-green').innerText = isEn ? "GreenHome Deployment (SAE 2.03)" : "Déploiement GreenHome (SAE 2.03)";
+            if(document.getElementById('meta-green')) document.getElementById('meta-green').innerText = isEn ? "Project & SAE" : "Projet & SAE";
+            if(document.getElementById('desc-green')) document.getElementById('desc-green').innerText = isEn
+                ? "Deployment of infrastructure services with implementation of the components needed for a coherent, manageable and documented environment."
+                : "Déploiement de services d'infrastructure avec mise en place des briques nécessaires au bon fonctionnement d'un environnement cohérent, administrable et documenté.";
+            if(document.getElementById('list-green')) document.getElementById('list-green').innerHTML = isEn
+                ? "<li>Set up essential infrastructure services.</li><li>Configured a stable and operable environment.</li><li>Documented choices and deployment method.</li>"
+                : "<li>Mise en place de services essentiels à l'infrastructure.</li><li>Configuration d'un environnement stable et exploitable.</li><li>Documentation des choix et de la méthode de déploiement.</li>";
+
+            // LABELS
+            document.querySelectorAll('.section-label').forEach(label => {
+                label.innerText = isEn ? "Tools" : "Outils";
+            });
+
+            document.querySelectorAll('.report-btn').forEach(btn => {
+                btn.innerHTML = isEn ? '<i class="fas fa-file-alt"></i> View report' : '<i class="fas fa-file-alt"></i> Voir le rapport';
+            });
+
+            // ACCORDION TITLES / CONTENT
+            const toggles = document.querySelectorAll('.competency-toggle span');
+            const contents = document.querySelectorAll('.competency-content p');
+
+            if (isEn) {
+                toggles[0].innerText = "Administer networks and the Internet";
+                toggles[1].innerText = "Connect businesses and users";
+                toggles[2].innerText = "Create software tools and applications for networks and telecoms";
+                toggles[3].innerText = "Collaborate in project mode";
+                toggles[4].innerText = "Administer networks and the Internet";
+                toggles[5].innerText = "Connect businesses and users";
+                toggles[6].innerText = "Administer networks and the Internet";
+                toggles[7].innerText = "Monitor an information system";
+                toggles[8].innerText = "Administer networks and the Internet";
+                toggles[9].innerText = "Create software tools and applications for networks and telecoms";
+
+                contents[0].innerText = "Use administration, supervision and security methods to maintain a coherent and operable network environment.";
+                contents[1].innerText = "Take user needs, service quality and continuity of access into account in a real professional context.";
+                contents[2].innerText = "Analyze scripts, understand their logic and suggest improvements in a demanding technical setting.";
+                contents[3].innerText = "Structure feedback, justify choices and produce readable work for technical or non-technical stakeholders.";
+                contents[4].innerText = "Deploy and configure the components of a business network while considering availability, addressing and operational constraints.";
+                contents[5].innerText = "Ensure reliable communication between sites and users through an architecture designed around usages and quality of service.";
+                contents[6].innerText = "Assess the robustness of an infrastructure by observing its exposure points and understanding how it operates technically.";
+                contents[7].innerText = "Identify abnormal behavior, qualify risks and suggest improvements to strengthen the security level.";
+                contents[8].innerText = "Deploy the infrastructure services required for an information system and guarantee their technical consistency.";
+                contents[9].innerText = "Produce configurations, methods and clear documentation to make a deployment reproducible and understandable.";
+            } else {
+                toggles[0].innerText = "Administrer les réseaux et l'Internet";
+                toggles[1].innerText = "Connecter les entreprises et les usagers";
+                toggles[2].innerText = "Créer des outils et applications informatiques pour les R&T";
+                toggles[3].innerText = "Collaborer en mode projet";
+                toggles[4].innerText = "Administrer les réseaux et l'Internet";
+                toggles[5].innerText = "Connecter les entreprises et les usagers";
+                toggles[6].innerText = "Administrer les réseaux et l'Internet";
+                toggles[7].innerText = "Surveiller un système d'information";
+                toggles[8].innerText = "Administrer les réseaux et l'Internet";
+                toggles[9].innerText = "Créer des outils et applications informatiques pour les R&T";
+
+                contents[0].innerText = "Mobiliser les méthodes d'administration, de supervision et de sécurisation pour maintenir un environnement réseau cohérent et exploitable.";
+                contents[1].innerText = "Prendre en compte les besoins utilisateurs, la qualité de service et la continuité des accès dans un contexte professionnel réel.";
+                contents[2].innerText = "Analyser des scripts, comprendre leur logique et proposer des améliorations dans un cadre technique exigeant.";
+                contents[3].innerText = "Structurer ses retours, argumenter ses choix et produire un travail lisible pour des parties prenantes techniques ou non techniques.";
+                contents[4].innerText = "Déployer et configurer les composants d'un réseau d'entreprise en tenant compte de la disponibilité, de l'adressage et des contraintes d'exploitation.";
+                contents[5].innerText = "Garantir une communication fiable entre sites et utilisateurs grâce à une architecture pensée pour les usages et la qualité de service.";
+                contents[6].innerText = "Évaluer la robustesse d'une infrastructure en observant ses points d'exposition et en comprenant son fonctionnement technique.";
+                contents[7].innerText = "Identifier des comportements anormaux, qualifier les risques et proposer des pistes d'amélioration pour renforcer le niveau de sécurité.";
+                contents[8].innerText = "Déployer les services d'infrastructure nécessaires au fonctionnement d'un système d'information et garantir leur cohérence technique.";
+                contents[9].innerText = "Produire des configurations, des méthodes et une documentation claire pour rendre un déploiement reproductible et compréhensible.";
+            }
+        }
+
+        function switchLanguage(lang) {
+            localStorage.setItem('selectedLanguage', lang);
+            updateTexts(lang);
+            document.getElementById('top-select').value = lang;
+            document.getElementById('language-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('language-overlay').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 600);
+        }
+
+        // INITIALISATION
+        const savedLang = localStorage.getItem('selectedLanguage');
+        if (savedLang) {
+            updateTexts(savedLang);
+            document.getElementById('top-select').value = savedLang;
+        } else {
+            document.getElementById('language-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    </script>
+
+    <script>
+        document.querySelectorAll('.competency-toggle').forEach((button) => {
+            button.addEventListener('click', function () {
+                const item = this.parentElement;
+                const content = item.querySelector('.competency-content');
+
+                item.classList.toggle('active');
+
+                if (item.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0px';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.entry-toggle').forEach((button, index) => {
+            const card = button.closest('.project-card');
+            const content = card.querySelector('.entry-content');
+
+            if (index === 0) {
+                card.classList.add('expanded');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+
+            button.addEventListener('click', function () {
+                card.classList.toggle('expanded');
+
+                if (card.classList.contains('expanded')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

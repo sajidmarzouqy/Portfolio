@@ -1,0 +1,867 @@
+﻿
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sajid Marzouqy | Compétences</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-body: #121212;
+            --bg-nav: rgba(18, 18, 18, 0.88);
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-pill: rgba(255, 255, 255, 0.05);
+            --text-main: #f3f4f6;
+            --text-muted: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #8ea3b7;
+            --accent-strong: #d6dde6;
+            --note-bg: rgba(125, 183, 126, 0.12);
+            --note-border: rgba(125, 183, 126, 0.24);
+            --note-text: #cfe8cf;
+            --font: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background:
+                radial-gradient(circle at top center, rgba(142, 163, 183, 0.05), transparent 35%),
+                linear-gradient(180deg, #121212 0%, #15161a 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px, 26px 26px;
+            opacity: 0.14;
+            mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #language-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #0b0b0f;
+            z-index: 20000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease;
+        }
+
+        .lang-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .lang-options { display: flex; gap: 30px; }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            min-width: 160px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        #permanent-lang-switch {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10001;
+            background: rgba(18, 18, 24, 0.88);
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        #permanent-lang-switch select {
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+            color: var(--text-main);
+        }
+
+        #permanent-lang-switch option { color: #111; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-nav);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            height: 74px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: 1180px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            width: 150px;
+            height: auto;
+            margin-left: 30px;
+            opacity: 0.98;
+            object-fit: contain;
+        }
+
+        .menu {
+            display: flex;
+            gap: 28px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .menu a.active,
+        .menu a:hover {
+            color: var(--text-main);
+        }
+
+        .menu a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 100%;
+            height: 1px;
+            background: var(--accent-strong);
+            opacity: 0.9;
+        }
+
+        .slider-viewport {
+            width: 100%;
+            height: 100vh;
+            padding-top: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .slide {
+            width: 50%;
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
+            overflow-y: auto;
+        }
+
+        .slide-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 2.15rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .arrow-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-main);
+            backdrop-filter: blur(10px);
+        }
+
+        .arrow-btn:hover {
+            background: rgba(255, 255, 255, 0.10);
+            transform: scale(1.05);
+        }
+
+        .container { width: 100%; max-width: 1160px; }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 26px;
+            width: 100%;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(214, 221, 230, 0.22);
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.24);
+        }
+
+        .card-label {
+            display: inline-block;
+            margin-bottom: 14px;
+            color: var(--accent-strong);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+        }
+
+        .icon-box {
+            font-size: 1.6rem;
+            color: var(--accent-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1.08rem;
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--text-main);
+        }
+
+        .skill-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            flex-grow: 1;
+            line-height: 1.7;
+            text-align: justify;
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .tech-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: var(--bg-pill);
+            color: #e4e4e7;
+            cursor: pointer;
+            transition: all 0.28s ease;
+            overflow: hidden;
+            max-width: 240px;
+            white-space: nowrap;
+        }
+
+        .tech-pill:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(214, 221, 230, 0.2);
+        }
+
+        .tech-pill.active {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(214, 221, 230, 0.24);
+        }
+
+        .tech-pill i {
+            font-size: 0.9rem;
+            color: var(--accent-strong);
+        }
+
+        .pill-level {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-width 0.28s ease, opacity 0.2s ease, margin-left 0.28s ease;
+            margin-left: 0;
+            color: var(--accent-strong);
+        }
+
+        .tech-pill.active .pill-level {
+            max-width: 170px;
+            opacity: 1;
+            margin-left: 4px;
+        }
+
+        .skill-info-panel {
+            position: fixed;
+            right: 24px;
+            bottom: 88px;
+            width: 340px;
+            min-height: 220px;
+            padding: 22px;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            background: rgba(20, 20, 24, 0.96);
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.32);
+            backdrop-filter: blur(14px);
+            z-index: 25;
+            opacity: 0;
+            transform: translateY(14px);
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .skill-info-panel.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .skill-info-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .skill-info-label {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: var(--accent-strong);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .skill-info-panel h4 {
+            font-size: 1.08rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        .skill-info-meta {
+            display: grid;
+            gap: 12px;
+        }
+
+        .skill-info-item {
+            padding: 12px 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .skill-info-item.hidden {
+            display: none;
+        }
+
+        .skill-info-item strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.8rem;
+            color: var(--accent-strong);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .skill-info-item span {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .grade-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: var(--note-bg);
+            border: 1px solid var(--note-border);
+            color: var(--note-text);
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 1024px) {
+            .skills-grid { grid-template-columns: 1fr; gap: 20px; }
+            h2 { font-size: 1.6rem; text-align: center; }
+            .slider-viewport {
+                height: auto;
+                min-height: 100vh;
+                padding-bottom: 100px;
+                padding-top: 90px;
+                overflow-y: auto;
+            }
+            .slide { height: auto; display: block; }
+            .slide-header { margin-bottom: 30px; }
+            footer { position: relative; padding: 25px; }
+            .menu { display: none; }
+            .container { padding: 0 15px; }
+            .skill-card { padding: 24px; }
+            .nav-logo { margin-left: 10px; width: 120px; }
+            .skill-info-panel { right: 16px; left: 16px; width: auto; bottom: 18px; }
+        }
+    </style>
+
+    <script>
+        if (localStorage.getItem('selectedLanguage')) {
+            document.write('<style>#language-overlay { display: none !important; }</style>');
+        }
+    </script>
+</head>
+<body>
+
+    <div id="language-overlay">
+        <h2 class="lang-title">Choose your language / Sélectionnez votre langue</h2>
+        <div class="lang-options">
+            <button class="lang-btn" onclick="switchLanguage('fr')"><span>🇫🇷</span> Français</button>
+            <button class="lang-btn" onclick="switchLanguage('en')"><span>🇬🇧</span> English</button>
+        </div>
+    </div>
+
+    <div id="permanent-lang-switch">
+        <select id="top-select" onchange="switchLanguage(this.value)">
+            <option value="fr">🇫🇷 FR</option>
+            <option value="en">🇬🇧 EN</option>
+        </select>
+    </div>
+
+    <nav>
+        <div class="nav-content">
+            <img src="Gemini_Generated_Image_pfub6hpfub6hpfub-removebg-preview.png" alt="Logo Sajid Marzouqy" class="nav-logo">
+            <div class="menu">
+                <a href="index.html" id="nav-home">Accueil</a>
+                <a href="projects.html" id="nav-projects">Projets &amp; Expériences</a>
+                <a href="skills.html" class="active" id="nav-skills">Compétences</a>
+                <a href="formation.html" id="nav-formation">Formation &amp; Certifs</a>
+                <a href="about.html" id="nav-about">À propos</a>
+                <a href="contact.html" id="nav-contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="slider-viewport">
+        <div class="slider-track" id="track">
+            <div class="slide">
+                <div class="container">
+                    <div class="slide-header">
+                        <h2 id="tech-title">Expertise Technique</h2>
+                        <div class="arrow-btn" onclick="goToSlide(1)">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <span class="card-label" id="label-cloud">Savoir-faire</span>
+                            <div class="card-header">
+                                <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
+                                <h3 id="h-cloud">Sécuriser les architectures</h3>
+                            </div>
+                            <p class="skill-desc" id="desc-cloud">Concevoir des environnements cohérents, contrôler les accès, segmenter les flux et intégrer les exigences de sécurité dès la phase de conception.</p>
+                            <div class="tags-container">
+                                <span class="tech-pill" data-fr="IAM" data-en="IAM" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Compréhension des logiques d'identité, de contrôle des accès et des annuaires, renforcée par les cours d'infrastructure et d'administration." data-context-en="Understanding identity, access control and directory concepts, reinforced through infrastructure and administration courses." data-grade-fr="Note validée : 18,00/20 en Service d'annuaire (S3)" data-grade-en="Validated grade: 18.00/20 in Directory Services (S3)">
+                                    <i class="fas fa-user-lock"></i><span class="pill-name">IAM</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="RGPD" data-en="GDPR" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Mise en lien avec les enjeux de conformité, de protection des données personnelles et de traçabilité documentaire." data-context-en="Linked to compliance, personal data protection and documentation traceability requirements.">
+                                    <i class="fas fa-balance-scale"></i><span class="pill-name">RGPD</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Azure AD" data-en="Azure AD" data-level-fr="Bases" data-level-en="Basic" data-context-fr="Premières manipulations autour des identités, groupes et politiques d'accès dans l'écosystème Microsoft, en cohérence avec les notions vues en annuaire." data-context-en="First hands-on work with identities, groups and access policies in the Microsoft ecosystem, aligned with directory-service concepts.">
+                                    <i class="fas fa-cloud"></i><span class="pill-name">Azure AD</span><span class="pill-level" data-fr=" - Bases" data-en=" - Basic"> - Bases</span>
+                                </span>
+                                <span class="tech-pill" data-fr="VLAN / FW" data-en="VLAN / FW" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Segmentation logique, isolation des flux et premières bases de filtrage réseau mobilisées en architecture et en SAE multi-sites." data-context-en="Logical segmentation, traffic isolation and first network filtering concepts used in architecture and multi-site SAE work." data-grade-fr="Note validée : 17,19/20 en Principe et architecture des réseaux (S1)" data-grade-en="Validated grade: 17.19/20 in Network Principles and Architecture (S1)">
+                                    <i class="fas fa-network-wired"></i><span class="pill-name">VLAN / FW</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="ANSSI" data-en="ANSSI" data-level-fr="Bases" data-level-en="Basic" data-context-fr="Appropriation des fondamentaux d'hygiène informatique et des réflexes de sécurisation d'un poste ou d'un service." data-context-en="Understanding of core cyber hygiene principles and first security reflexes for systems and services." data-grade-fr="Note validée : 15,00/20 en Hygiène informatique (SAE11)" data-grade-en="Validated grade: 15.00/20 in Cyber Hygiene (SAE11)">
+                                    <i class="fas fa-file-contract"></i><span class="pill-name">ANSSI</span><span class="pill-level" data-fr=" - Bases" data-en=" - Basic"> - Bases</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <span class="card-label" id="label-dev">Savoir-faire</span>
+                            <div class="card-header">
+                                <div class="icon-box"><i class="fas fa-code"></i></div>
+                                <h3 id="h-dev">Développer des solutions</h3>
+                            </div>
+                            <p class="skill-desc" id="desc-dev">Produire des scripts et applications utiles aux besoins réseaux et cybersécurité, avec une logique d'automatisation, de fiabilité et de clarté.</p>
+                            <div class="tags-container">
+                                <span class="tech-pill" data-fr="Python" data-en="Python" data-level-fr="Bases" data-level-en="Basic" data-context-fr="Utilisé pour lire, corriger et comprendre des scripts, puis consolidé dans les modules de programmation et les SAE applicatives." data-context-en="Used to read, fix and understand scripts, then strengthened in programming modules and application-oriented SAE work." data-grade-fr="Note validée : 15,53/20 en Consolidation de la programmation (S3)" data-grade-en="Validated grade: 15.53/20 in Programming Consolidation (S3)">
+                                    <i class="fab fa-python"></i><span class="pill-name">Python</span><span class="pill-level" data-fr=" - Bases" data-en=" - Basic"> - Bases</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Dart" data-en="Dart" data-level-fr="Bases" data-level-en="Basic" data-context-fr="Découverte d'une logique de développement mobile et d'interfaces, dans une démarche d'apprentissage complémentaire." data-context-en="Discovery of mobile-development and interface logic as part of complementary learning.">
+                                    <i class="fas fa-mobile-alt"></i><span class="pill-name">Dart</span><span class="pill-level" data-fr=" - Bases" data-en=" - Basic"> - Bases</span>
+                                </span>
+                                <span class="tech-pill" data-fr="PHP / SQL" data-en="PHP / SQL" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Mobilisé dans des projets d'interface, de logique backend et de structuration de données, avec une progression en web et en bases de données." data-context-en="Used in interface projects, backend logic and data structuring, with steady progress in web development and databases." data-grade-fr="Note validée : 15,00/20 en Initiation développement Web (S2)" data-grade-en="Validated grade: 15.00/20 in Web Development Introduction (S2)">
+                                    <i class="fab fa-php"></i><span class="pill-name">PHP / SQL</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Git" data-en="Git" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Utilisé pour versionner les fichiers, suivre les évolutions d'un projet et collaborer plus proprement sur le code." data-context-en="Used to version files, track project changes and collaborate more cleanly on code.">
+                                    <i class="fab fa-git-alt"></i><span class="pill-name">Git</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="skill-card">
+                            <span class="card-label" id="label-sys">Savoir-faire</span>
+                            <div class="card-header">
+                                <div class="icon-box"><i class="fas fa-server"></i></div>
+                                <h3 id="h-sys">Administrer les systèmes et réseaux</h3>
+                            </div>
+                            <p class="skill-desc" id="desc-sys">Déployer des services, maintenir des environnements stables, gérer les accès et assurer la cohérence technique entre systèmes et infrastructure réseau.</p>
+                            <div class="tags-container">
+                                <span class="tech-pill" data-fr="Windows Server" data-en="Windows Server" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Administration de services et compréhension des rôles systèmes dans un environnement d'entreprise, avec une bonne base acquise en S2." data-context-en="System-service administration and understanding of server roles in enterprise environments, with a strong foundation built in semester 2." data-grade-fr="Note validée : 17,67/20 en Administration système et virtualisation (S2)" data-grade-en="Validated grade: 17.67/20 in System Administration and Virtualization (S2)">
+                                    <i class="fab fa-windows"></i><span class="pill-name">Windows Server</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Linux" data-en="Linux" data-level-fr="Avancé" data-level-en="Advanced" data-context-fr="Administration de services, usage en environnement réseau, configuration et exploitation régulière dans les SAE et travaux d'infrastructure." data-context-en="Service administration, network-environment usage, configuration and regular operations in SAE work and infrastructure labs." data-grade-fr="Note validée : 17,67/20 en Administration système et virtualisation (S2)" data-grade-en="Validated grade: 17.67/20 in System Administration and Virtualization (S2)">
+                                    <i class="fab fa-linux"></i><span class="pill-name">Linux</span><span class="pill-level" data-fr=" - Avancé" data-en=" - Advanced"> - Avancé</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Virtualisation" data-en="Virtualization" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Maîtrise des fondamentaux de virtualisation pour préparer, isoler et tester des environnements techniques." data-context-en="Solid virtualization fundamentals used to prepare, isolate and test technical environments." data-grade-fr="Note validée : 17,67/20 en Administration système et virtualisation (S2)" data-grade-en="Validated grade: 17.67/20 in System Administration and Virtualization (S2)">
+                                    <i class="fas fa-hdd"></i><span class="pill-name">Virtualisation</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="AD DS" data-en="AD DS" data-level-fr="Bases" data-level-en="Basic" data-context-fr="Approche des services d'annuaire, de la centralisation des comptes et de l'organisation des accès dans une infrastructure." data-context-en="Initial experience with directory services, centralized accounts and access organization within an infrastructure." data-grade-fr="Note validée : 18,00/20 en Service d'annuaire (S3)" data-grade-en="Validated grade: 18.00/20 in Directory Services (S3)">
+                                    <i class="fas fa-users-cog"></i><span class="pill-name">AD DS</span><span class="pill-level" data-fr=" - Bases" data-en=" - Basic"> - Bases</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="container">
+                    <div class="slide-header">
+                        <div class="arrow-btn" onclick="goToSlide(0)">
+                            <i class="fas fa-arrow-left"></i>
+                        </div>
+                        <h2 id="meth-title">Expertise Méthodologique</h2>
+                    </div>
+
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <span class="card-label" id="label-mgmt">Méthode</span>
+                            <div class="card-header">
+                                <div class="icon-box"><i class="fas fa-tasks"></i></div>
+                                <h3 id="h-mgmt">Piloter les projets</h3>
+                            </div>
+                            <p class="skill-desc" id="desc-mgmt">Organiser les tâches, suivre l'avancement, coordonner les contributions et garder une lecture claire des priorités et des livrables.</p>
+                            <div class="tags-container">
+                                <span class="tech-pill" data-fr="Trello" data-en="Trello" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Utilisé pour répartir les tâches, suivre l'avancement et garder une vision claire des priorités d'un projet collectif." data-context-en="Used to split tasks, track progress and keep a clear overview of priorities in team projects.">
+                                    <i class="fab fa-trello"></i><span class="pill-name">Trello</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Planification" data-en="Planning" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Organisation des étapes d'un projet, anticipation des livrables et suivi des échéances dans les SAE." data-context-en="Project-step organization, deliverable anticipation and deadline tracking in SAE work." data-grade-fr="Note validée : 14,20/20 en Gestion de projet 2 (S3)" data-grade-en="Validated grade: 14.20/20 in Project Management 2 (S3)">
+                                    <i class="fas fa-clock"></i><span class="pill-name">Planification</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Travail d'équipe" data-en="Teamwork" data-level-fr="Confirmé" data-level-en="Proficient" data-context-fr="Travail en binôme ou en groupe sur les SAE, coordination des tâches et mise en commun des livrables dans un cadre projet." data-context-en="Pair and team work in SAE projects, task coordination and shared deliverables in a project setting." data-grade-fr="Note validée : 15,60/20 en Projet intégratif (SAE2.04)" data-grade-en="Validated grade: 15.60/20 in Integrative Project (SAE2.04)">
+                                    <i class="fas fa-users"></i><span class="pill-name">Travail d'équipe</span><span class="pill-level" data-fr=" - Confirmé" data-en=" - Proficient"> - Confirmé</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <span class="card-label" id="label-doc">Méthode</span>
+                            <div class="card-header">
+                                <div class="icon-box"><i class="fas fa-file-alt"></i></div>
+                                <h3 id="h-doc">Documenter les choix</h3>
+                            </div>
+                            <p class="skill-desc" id="desc-doc">Rédiger des livrables structurés, produire des schémas et rendre une solution technique lisible, traçable et réutilisable.</p>
+                            <div class="tags-container">
+                                <span class="tech-pill" data-fr="Schémas Réseau" data-en="Network Diagrams" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Traduction visuelle d'architectures et de topologies pour rendre un projet réseau lisible et exploitable." data-context-en="Visual translation of architectures and topologies to make a network project readable and actionable.">
+                                    <i class="fas fa-project-diagram"></i><span class="pill-name">Schémas Réseau</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Rapports" data-en="Reports" data-level-fr="Confirmé" data-level-en="Proficient" data-context-fr="Rédaction de comptes rendus, dossiers techniques et synthèses pour présenter clairement une démarche ou un résultat." data-context-en="Writing reports, technical files and syntheses to clearly present a process or a result." data-grade-fr="Note validée : 13,00/20 en Portfolio (SAE2.05)" data-grade-en="Validated grade: 13.00/20 in Portfolio (SAE2.05)">
+                                    <i class="fas fa-book"></i><span class="pill-name">Rapports</span><span class="pill-level" data-fr=" - Confirmé" data-en=" - Proficient"> - Confirmé</span>
+                                </span>
+                                <span class="tech-pill" data-fr="SLA / GTR" data-en="SLA / GTR" data-level-fr="Bases" data-level-en="Basic" data-context-fr="Compréhension progressive des engagements de service, de la qualité attendue et des contraintes d'exploitation." data-context-en="Progressive understanding of service commitments, expected quality and operational constraints.">
+                                    <i class="fas fa-handshake"></i><span class="pill-name">SLA / GTR</span><span class="pill-level" data-fr=" - Bases" data-en=" - Basic"> - Bases</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <span class="card-label" id="label-soft">Expertise Transversale</span>
+                            <div class="card-header">
+                                <div class="icon-box"><i class="fas fa-comments"></i></div>
+                                <h3 id="h-soft">Communiquer &amp; S'adapter</h3>
+                            </div>
+                            <p class="skill-desc" id="desc-soft">Mobiliser l'anglais technique, vulgariser un sujet complexe, travailler efficacement en équipe et garder une posture stable dans les contextes sous pression.</p>
+                            <div class="tags-container">
+                                <span class="tech-pill" data-fr="Anglais technique" data-en="Technical English" data-level-fr="Courant (B2)" data-level-en="Fluent (B2)" data-context-fr="Lecture de documentation, compréhension de consignes techniques et échanges dans des contextes numériques ou professionnels." data-context-en="Reading documentation, understanding technical instructions and communicating in digital or professional contexts." data-grade-fr="Note validée : 14,25/20 en Anglais technique (S2)" data-grade-en="Validated grade: 14.25/20 in Technical English (S2)">
+                                    <i class="fas fa-language"></i><span class="pill-name">Anglais technique</span><span class="pill-level" data-fr=" - Courant (B2)" data-en=" - Fluent (B2)"> - Courant (B2)</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Vulgarisation technique" data-en="Technical Popularization" data-level-fr="Confirmé" data-level-en="Proficient" data-context-fr="Capacité à reformuler un sujet technique à l'oral comme à l'écrit pour un public non spécialiste, notamment dans les restitutions de SAE." data-context-en="Ability to rephrase technical topics orally and in writing for non-specialists, especially during SAE presentations." data-grade-fr="Note validée : 18,00/20 en Expression-Culture-Communication (S2)" data-grade-en="Validated grade: 18.00/20 in Communication and Expression (S2)">
+                                    <i class="fas fa-comments"></i><span class="pill-name">Vulgarisation technique</span><span class="pill-level" data-fr=" - Confirmé" data-en=" - Proficient"> - Confirmé</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Travail en équipe" data-en="Teamwork" data-level-fr="Confirmé" data-level-en="Proficient" data-context-fr="Travail collectif sur les SAE, coordination, écoute et répartition claire des tâches pour tenir les objectifs." data-context-en="Collective work in SAE projects, coordination, listening and clear task allocation to meet objectives." data-grade-fr="Note validée : 15,60/20 en Projet intégratif (SAE2.04)" data-grade-en="Validated grade: 15.60/20 in Integrative Project (SAE2.04)">
+                                    <i class="fas fa-users"></i><span class="pill-name">Travail en équipe</span><span class="pill-level" data-fr=" - Confirmé" data-en=" - Proficient"> - Confirmé</span>
+                                </span>
+                                <span class="tech-pill" data-fr="Gestion du stress" data-en="Stress Management" data-level-fr="Intermédiaire" data-level-en="Intermediate" data-context-fr="Mobilisée lors des rendus, des démonstrations et des situations techniques à contrainte de temps, avec une posture plus stable au fil des SAE." data-context-en="Used during deadlines, demos and time-constrained technical situations, with a steadier posture over successive SAE projects.">
+                                    <i class="fas fa-brain"></i><span class="pill-name">Gestion du stress</span><span class="pill-level" data-fr=" - Intermédiaire" data-en=" - Intermediate"> - Intermédiaire</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="skill-info-panel" id="skill-info-panel" aria-hidden="true">
+        <button class="skill-info-close" type="button" id="skill-info-close" aria-label="Fermer le détail">×</button>
+        <span class="skill-info-label" id="info-label">Détail de compétence</span>
+        <h4 id="info-title">Sélectionne une compétence</h4>
+        <div class="skill-info-meta">
+            <div class="skill-info-item">
+                <strong id="info-level-label">Niveau</strong>
+                <span id="info-level">Clique sur une pilule pour voir le niveau.</span>
+            </div>
+            <div class="skill-info-item">
+                <strong id="info-context-label">Mise en pratique</strong>
+                <span id="info-context">Tu pourras y résumer rapidement ce que tu as fait en SAE, en projet ou en auto-formation.</span>
+            </div>
+            <div class="skill-info-item" id="info-grade-card">
+                <strong id="info-grade-label">Note officielle</strong>
+                <span id="info-grade"></span>
+            </div>
+        </div>
+    </aside>
+
+    <footer>
+        <p>&copy; 2025 Sajid Marzouqy</p>
+    </footer>
+    <script>
+        const track = document.getElementById('track');
+
+        function goToSlide(index) {
+            track.style.transform = index === 1 ? 'translateX(-50%)' : 'translateX(0%)';
+        }
+
+        function updateTexts(lang) {
+            const isEn = lang === 'en';
+
+            document.getElementById('nav-home').innerText = isEn ? 'Home' : 'Accueil';
+            document.getElementById('nav-projects').innerText = isEn ? 'Projects & Experience' : 'Projets & Expériences';
+            document.getElementById('nav-skills').innerText = isEn ? 'Skills' : 'Compétences';
+            document.getElementById('nav-formation').innerText = isEn ? 'Education & Certifications' : 'Formation & Certifs';
+            document.getElementById('nav-about').innerText = isEn ? 'About' : 'À propos';
+            document.getElementById('nav-contact').innerText = isEn ? 'Contact' : 'Contact';
+
+            document.getElementById('tech-title').innerText = isEn ? 'Technical Expertise' : 'Expertise Technique';
+            document.getElementById('meth-title').innerText = isEn ? 'Methodological Expertise' : 'Expertise Méthodologique';
+
+            document.getElementById('label-cloud').innerText = isEn ? 'Operational Skills' : 'Savoir-faire';
+            document.getElementById('label-dev').innerText = isEn ? 'Operational Skills' : 'Savoir-faire';
+            document.getElementById('label-sys').innerText = isEn ? 'Operational Skills' : 'Savoir-faire';
+            document.getElementById('label-mgmt').innerText = isEn ? 'Method' : 'Méthode';
+            document.getElementById('label-doc').innerText = isEn ? 'Method' : 'Méthode';
+            document.getElementById('label-soft').innerText = isEn ? 'Transversal Expertise' : 'Expertise Transversale';
+
+            document.getElementById('h-cloud').innerText = isEn ? 'Secure architectures' : 'Sécuriser les architectures';
+            document.getElementById('desc-cloud').innerText = isEn ? 'Design coherent environments, control access, segment flows and integrate security requirements from the earliest design phase.' : 'Concevoir des environnements cohérents, contrôler les accès, segmenter les flux et intégrer les exigences de sécurité dès la phase de conception.';
+
+            document.getElementById('h-dev').innerText = isEn ? 'Develop solutions' : 'Développer des solutions';
+            document.getElementById('desc-dev').innerText = isEn ? 'Produce scripts and applications useful for networking and cybersecurity needs, with a focus on automation, reliability and clarity.' : 'Produire des scripts et applications utiles aux besoins réseaux et cybersécurité, avec une logique d\'automatisation, de fiabilité et de clarté.';
+
+            document.getElementById('h-sys').innerText = isEn ? 'Administer systems and networks' : 'Administrer les systèmes et réseaux';
+            document.getElementById('desc-sys').innerText = isEn ? 'Deploy services, maintain stable environments, manage access and ensure technical consistency between systems and network infrastructure.' : 'Déployer des services, maintenir des environnements stables, gérer les accès et assurer la cohérence technique entre systèmes et infrastructure réseau.';
+
+            document.getElementById('h-mgmt').innerText = isEn ? 'Manage projects' : 'Piloter les projets';
+            document.getElementById('desc-mgmt').innerText = isEn ? 'Organize tasks, monitor progress, coordinate contributions and maintain a clear reading of priorities and deliverables.' : 'Organiser les tâches, suivre l\'avancement, coordonner les contributions et garder une lecture claire des priorités et des livrables.';
+
+            document.getElementById('h-doc').innerText = isEn ? 'Document decisions' : 'Documenter les choix';
+            document.getElementById('desc-doc').innerText = isEn ? 'Write structured deliverables, produce diagrams and make a technical solution readable, traceable and reusable.' : 'Rédiger des livrables structurés, produire des schémas et rendre une solution technique lisible, traçable et réutilisable.';
+
+            document.getElementById('h-soft').innerText = isEn ? 'Communicate & adapt' : 'Communiquer & S\'adapter';
+            document.getElementById('desc-soft').innerText = isEn ? 'Use technical English, popularize complex topics, work effectively in a team and maintain a stable posture under pressure.' : 'Mobiliser l\'anglais technique, vulgariser un sujet complexe, travailler efficacement en équipe et garder une posture stable dans les contextes sous pression.';
+
+            document.getElementById('info-label').innerText = isEn ? 'Skill details' : 'Détail de compétence';
+            document.getElementById('info-level-label').innerText = isEn ? 'Level' : 'Niveau';
+            document.getElementById('info-context-label').innerText = isEn ? 'Applied in practice' : 'Mise en pratique';
+            document.getElementById('info-grade-label').innerText = isEn ? 'Official grade' : 'Note officielle';
+
+            document.querySelectorAll('.tech-pill').forEach((pill) => {
+                const nameEl = pill.querySelector('.pill-name');
+                const levelEl = pill.querySelector('.pill-level');
+                if (nameEl) {
+                    nameEl.textContent = isEn ? (pill.dataset.en || pill.dataset.fr) : (pill.dataset.fr || pill.dataset.en);
+                }
+                if (levelEl) {
+                    levelEl.textContent = isEn ? (levelEl.dataset.en || '') : (levelEl.dataset.fr || '');
+                }
+            });
+
+            const activePill = document.querySelector('.tech-pill.active');
+            if (activePill) {
+                fillSkillPanel(activePill);
+            }
+        }
+
+        function switchLanguage(lang) {
+            localStorage.setItem('selectedLanguage', lang);
+            updateTexts(lang);
+            document.getElementById('top-select').value = lang;
+            document.getElementById('language-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('language-overlay').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 600);
+        }
+
+        const savedLang = localStorage.getItem('selectedLanguage');
+        if (savedLang) {
+            updateTexts(savedLang);
+            document.getElementById('top-select').value = savedLang;
+        } else {
+            document.getElementById('language-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    </script>
+
+    <script>
+        const infoPanel = document.getElementById('skill-info-panel');
+        const infoClose = document.getElementById('skill-info-close');
+        const infoTitle = document.getElementById('info-title');
+        const infoLevel = document.getElementById('info-level');
+        const infoContext = document.getElementById('info-context');
+        const infoGrade = document.getElementById('info-grade');
+        const infoGradeCard = document.getElementById('info-grade-card');
+
+        function fillSkillPanel(pill) {
+            const isEn = (localStorage.getItem('selectedLanguage') || 'fr') === 'en';
+            const title = isEn ? (pill.dataset.en || pill.dataset.fr) : (pill.dataset.fr || pill.dataset.en);
+            const level = isEn ? (pill.dataset.levelEn || 'To be completed') : (pill.dataset.levelFr || 'À compléter');
+            const context = isEn ? (pill.dataset.contextEn || 'To be completed') : (pill.dataset.contextFr || 'À compléter');
+            const grade = isEn ? pill.dataset.gradeEn : pill.dataset.gradeFr;
+
+            infoTitle.textContent = title;
+            infoLevel.textContent = level;
+            infoContext.textContent = context;
+
+            if (grade) {
+                infoGradeCard.classList.remove('hidden');
+                infoGrade.innerHTML = '<span class="grade-badge">' + grade + '</span>';
+            } else {
+                infoGradeCard.classList.add('hidden');
+                infoGrade.textContent = '';
+            }
+
+            infoPanel.classList.add('visible');
+            infoPanel.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeSkillPanel() {
+            infoPanel.classList.remove('visible');
+            infoPanel.setAttribute('aria-hidden', 'true');
+            document.querySelectorAll('.tech-pill').forEach((item) => item.classList.remove('active'));
+        }
+
+        document.querySelectorAll('.tech-pill').forEach((pill) => {
+            pill.addEventListener('click', function () {
+                if (this.classList.contains('active')) {
+                    closeSkillPanel();
+                    return;
+                }
+
+                document.querySelectorAll('.tech-pill').forEach((item) => item.classList.remove('active'));
+                this.classList.add('active');
+                fillSkillPanel(this);
+            });
+        });
+
+        infoClose.addEventListener('click', closeSkillPanel);
+    </script>
+</body>
+</html>
